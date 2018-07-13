@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% from 'formhelper.html' import render_field %}
+
+{% block title %} Inquire Hotels {% endblock %}
+
+{% block navbar %}
+    {% include 'partials/navbars/_navbarCustomer.html' %}
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <br>
+        <h4 class="display-4">Hotel Inquiry</h4>
+        <br>
+        <form action="{{ url_for('main.InquireHotels') }}" method="post" novalidate>
+            {{ form.csrf_token }}
+            <div class="row">
+                <div class="col">
+                    {{ render_field(form.firstName) }}
+                </div>
+                <div class="col">
+                    {{ render_field(form.lastName) }}
+                </div>
+                <div class="col">
+                    {{ render_field(form.email) }}
+                </div>
+            </div>
+            <div class="row">
+                    <div class="col">
+                            {{ render_field(form.location) }}
+                        </div>
+                        <div class="col">
+                                {{ render_field(form.budget) }}
+                            </div>
+                        <div class="col">
+                            {{ render_field(form.guest) }}
+                        </div>        
+            </div>
+            <div class="row">
+                <div class="col">
+                        {{ render_field(form.checkIn) }}
+                </div>
+                <div class="col">
+                        {{ render_field(form.checkOut) }}
+                </div>
+            </div>
+                {{ render_field(form.note) }}
+            <div class="col-auto">
+                <input type="submit" value="Submit" class="btn btn-primary">
+            </div>
+        </form>
+    </div>
+{% endblock %}

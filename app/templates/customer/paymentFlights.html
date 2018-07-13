@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% from 'formhelper.html' import render_field %}
+
+{% block title %} Flight Review {% endblock %}
+
+{% block navbar %}
+    {% include 'partials/navbars/_navbarCustomer.html' %}
+{% endblock %}
+
+{% block jumbotron %}
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+            <h4 class="display-5">
+                Booking Reference Number: {{ referenceNumber }}
+            </h4>
+            <div class="row">
+                <p class="lead col">Flight No: {{flight.flightNo}}</p>
+                <p class="lead col">Number of Tickets booked: {{ counter }}</p>
+            </div>
+            <div class="row">
+                <div class="lead col">Price: Php {{ flight.price * counter }}</div>
+                <div class="lead col"></div>
+            </div>
+            <br>
+            <center>
+                <form action="{{ url_for('main.ChargeFlights', counter=counter, id=flight.id, ref=referenceNumber) }}" method="POST">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+                <script
+                        src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                        data-key="pk_test_GjK3GmJJ1exs60wIcgTpfggq"
+                        data-name="{{flight.flightNo}} ({{flight.origin}} - {{flight.arrival}})"
+                        data-description="Php {{ flight.price * counter }}"
+                        data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+                        data-locale="auto">
+                    </script>
+                </form>
+            </center>
+        </div>
+    </div>
+{% endblock %}

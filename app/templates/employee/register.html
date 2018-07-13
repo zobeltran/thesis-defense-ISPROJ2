@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% from "formhelper.html" import render_field %}
+{% block title %} Register {% endblock %}
+
+{% block navbar %}
+    {% include 'partials/navbars/_navbarEmployee.html' %}
+{% endblock %}
+
+{% block content %}
+<br>
+    <div class="container">
+            <h4 class="display-4">Register Employee</h4>
+        {% with errors = get_flashed_messages(category_filter=["error"]) %}
+            {% if errors %}
+                {% for error in errors %}
+                    <div class="alert alert-danger" role="alert">
+                        {{ error }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <form action="{{ url_for('main.Register') }}" method="post" novalidate>
+            {{ form.csrf_token() }}
+            
+            {{ render_field(form.username) }}
+            <div class="row">
+                <div class="col">
+                    {{ render_field(form.password) }}
+                </div>
+                <div class="col">
+                    {{ render_field(form.confirm) }}
+                </div>
+            </div>
+            
+            
+            <div class="row">
+                <div class="col">
+                    {{ render_field(form.firstName) }}
+                </div>
+                <div class="col">
+                    {{ render_field(form.lastName) }}
+                </div>
+            </div>
+            
+            
+            {{ render_field(form.email) }}
+            {{ render_field(form.role) }}
+            <div>
+                {{ form.recaptcha }}
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-auto mr-auto">
+                    <a href="{{ url_for('main.LogIn') }}" class="btn btn-secondary">Cancel Registration</a>
+                </div>
+                <div class="col-auto">
+                    <input type="submit" value="Submit Registration" class="btn btn-primary">
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}
